@@ -16,15 +16,39 @@
 
         .toggle-btn {
             cursor: pointer;
-            color: #007bff;
-            text-decoration: underline;
+            color: #fff;
+            background-color: #007bff; /* Blue background */
+            border: none; /* No border */
+            border-radius: 20px; /* Curved corners */
+            padding: 10px 20px; /* Padding for button size */
+            text-decoration: none; /* Remove underline */
+            transition: background-color 0.3s; /* Transition for hover effect */
+            margin: 10px auto; /* Center the button with auto margin */
+            display: block; /* Make each button take the full width */
+            width: 80%; /* Optional: Set a specific width for buttons */
+            max-width: 300px; /* Optional: Set a maximum width */
+            text-align: center; /* Center text in the button */
+        }
+
+        .toggle-btn:hover {
+            background-color: #0056b3; /* Darker blue on hover */
         }
     </style>
 </head>
 <body>
     <h1>Welcome to the Blood Bank Management System</h1>
 
-    <h2>Register User</h2>
+{% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+    <h2 class="toggle-btn" onclick="toggleForm('registerForm')">Register User</h2>
+     <div id="registerForm" class="form-container">
     <form method="POST" action="/register">
         <input type="text" name="name" placeholder="Enter your name" required>
         <select name="role" required>
@@ -36,37 +60,42 @@
         <input type="text" name="details" placeholder="Enter additional details" required>
         <button type="submit">Register</button>
     </form>
-
-    <h2>Add Blood Donation Record</h2>
+     </div>
+    <h2 class="toggle-btn" onclick="toggleForm('requestForm')">Add Blood Donation Record</h2>
+    <div id="requestForm" class="form-container">
     <form method="POST" action="/add_donation">
         <input type="text" name="donor_name" placeholder="Donor Name" required>
         <input type="text" name="blood_type" placeholder="Blood Type (e.g., A+, B-)" required>
         <input type="number" name="quantity" placeholder="Quantity" required>
         <button type="submit">Add Donation</button>
     </form>
-
-    <h2>Request Blood</h2>
+    </div>
+    <h2 class="toggle-btn" onclick="toggleForm('requestBlood')">Request Blood</h2>
+    <div id="requestBlood" class="form-container">
     <form method="POST" action="/request_blood">
         <input type="text" name="patient_name" placeholder="Patient Name" required>
         <input type="text" name="blood_type" placeholder="Required Blood Type (e.g., A+, B-)" required>
         <input type="number" name="quantity" placeholder="Quantity" required>
         <button type="submit">Request Blood</button>
     </form>
+    </div>
 
-    <h2>View Options</h2>
+    <h2 class="toggle-btn" onclick="toggleForm('requestOptions')">View Options</h2>
+    <div id="requestOptions" class="form-container">
     <button onclick="window.location.href='/view_users'">View Registered Users</button>
     <button onclick="window.location.href='/view_donors'">View Available Donors</button>
     <button onclick="window.location.href='/view_patients'">View Patients List</button>
     <button onclick="window.location.href='/view_records'">View Blood Donation Records</button>
-
-    {% with messages = get_flashed_messages() %}
-      {% if messages %}
-        <ul>
-        {% for message in messages %}
-          <li>{{ message }}</li>
-        {% endfor %}
-        </ul>
-      {% endif %}
-    {% endwith %}
+    </div>
+<script>
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            if (form.style.display === "none" || form.style.display === "") {
+                form.style.display = "block"; // Show the form
+            } else {
+                form.style.display = "none"; // Hide the form
+            }
+        }
+        </script>
 </body>
 </html>
