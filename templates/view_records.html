@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Donation Records</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+<body>
+    <h1>Blood Donation Records</h1>
+    <ul>
+        {% for record in records %}
+            <li>Donor Name: {{ record['data']['donor_name'] }}, Blood Type: {{ record['data']['blood_type'] }}, Quantity: {{ record['data']['quantity'] }}</li>
+        {% endfor %}
+    </ul>
+    <a href="/">Go back</a>
+</body>
+</html>

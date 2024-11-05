@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blood Bank Management System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>Welcome to the Blood Bank Management System</h1>
+
+    <h2>Register User</h2>
+    <form method="POST" action="/register">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <select name="role" required>
+            <option value="Donor">Donor</option>
+            <option value="Patient">Patient</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <input type="text" name="details" placeholder="Enter additional details" required>
+        <button type="submit">Register</button>
+    </form>
+
+    <h2>Add Blood Donation Record</h2>
+    <form method="POST" action="/add_donation">
+        <input type="text" name="donor_name" placeholder="Donor Name" required>
+        <input type="text" name="blood_type" placeholder="Blood Type (e.g., A+, B-)" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <button type="submit">Add Donation</button>
+    </form>
+
+    <h2>Request Blood</h2>
+    <form method="POST" action="/request_blood">
+        <input type="text" name="patient_name" placeholder="Patient Name" required>
+        <input type="text" name="blood_type" placeholder="Required Blood Type (e.g., A+, B-)" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <button type="submit">Request Blood</button>
+    </form>
+
+    <h2>View Options</h2>
+    <button onclick="window.location.href='/view_users'">View Registered Users</button>
+    <button onclick="window.location.href='/view_donors'">View Available Donors</button>
+    <button onclick="window.location.href='/view_patients'">View Patients List</button>
+    <button onclick="window.location.href='/view_records'">View Blood Donation Records</button>
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+</body>
+</html>
