@@ -12,87 +12,61 @@
             border: 1px solid #ccc;
             padding: 20px;
             border-radius: 5px;
-            text-align: center; /* Center text in the button */
-
         }
 
-       .toggle-btn {
-    cursor: pointer;
-    color: #fff;
-    background-color: #007bff; /* Blue background */
-    border: none; /* No border */
-    border-radius: 20px; /* Curved corners */
-    padding: 10px 20px; /* Padding for button size */
-    text-decoration: none; /* Remove underline */
-    transition: background-color 0.3s; /* Transition for hover effect */
-    margin: 10px auto; /* Center the button with auto margin */
-    display: block; /* Make each button take the full width */
-    width: 80%; /* Optional: Set a specific width for buttons */
-    max-width: 300px; /* Optional: Set a maximum width */
-    text-align: center; /* Center text in the button */
-}
-
-
-    .toggle-btn:hover {
-        background-color: #0056b3; /* Darker blue on hover */
-    }
+        .toggle-btn {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
-    <h1>Blood Bank Management System</h1>
+    <h1>Welcome to the Blood Bank Management System</h1>
 
-    <h2 class="toggle-btn" onclick="toggleForm('registerForm')">Register</h2>
-    <div id="registerForm" class="form-container">
-        <form>
-            <label for="donorName">Name:</label>
-            <input type="text" id="donorName" required><br><br>
-            <label for="donorDetails">Details:</label>
-            <input type="text" id="donorDetails" required><br><br>
-            <label for="bloodType">Blood Type:</label>
-            <input type="text" id="bloodType" required><br><br>
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+    <h2>Register User</h2>
+    <form method="POST" action="/register">
+        <input type="text" name="name" placeholder="Enter your name" required>
+        <select name="role" required>
+            <option value="Donor">Donor</option>
+            <option value="Patient">Patient</option>
+            <option value="Admin">Admin</option>
+        </select>
+        <input type="text" name="blood_type" placeholder="Blood Type (e.g., A+, B-)" required>
+        <input type="text" name="details" placeholder="Enter additional details" required>
+        <button type="submit">Register</button>
+    </form>
 
-    <h2 class="toggle-btn" onclick="toggleForm('requestForm')">Request Blood</h2>
-    <div id="requestForm" class="form-container">
-        <form>
-            <label for="patientName">Patient Name:</label>
-            <input type="text" id="patientName" required><br><br>
-            <label for="requestedBloodType">Required Blood Type:</label>
-            <input type="text" id="requestedBloodType" required><br><br>
-            <button type="submit">Request</button>
-        </form>
-    </div>
+    <h2>Add Blood Donation Record</h2>
+    <form method="POST" action="/add_donation">
+        <input type="text" name="donor_name" placeholder="Donor Name" required>
+        <input type="text" name="blood_type" placeholder="Blood Type (e.g., A+, B-)" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <button type="submit">Add Donation</button>
+    </form>
 
-    <h2 class="toggle-btn" onclick="toggleForm('viewOptions')">View Options</h2>
-    <div id="viewOptions" class="form-container">
+    <h2>Request Blood</h2>
+    <form method="POST" action="/request_blood">
+        <input type="text" name="patient_name" placeholder="Patient Name" required>
+        <input type="text" name="blood_type" placeholder="Required Blood Type (e.g., A+, B-)" required>
+        <input type="number" name="quantity" placeholder="Quantity" required>
+        <button type="submit">Request Blood</button>
+    </form>
+
+    <h2>View Options</h2>
     <button onclick="window.location.href='/view_users'">View Registered Users</button>
     <button onclick="window.location.href='/view_donors'">View Available Donors</button>
     <button onclick="window.location.href='/view_patients'">View Patients List</button>
     <button onclick="window.location.href='/view_records'">View Blood Donation Records</button>
-    </div>
-    <h2 class="toggle-btn" onclick="toggleForm('viewRecords')">View All Records</h2>
-    <div id="viewRecords" class="form-container">
-        <button onclick="fetchRecords()">View All Records</button>
-        <div id="recordsDisplay"></div>
-    </div>
 
-    <script>
-        function toggleForm(formId) {
-            const form = document.getElementById(formId);
-            if (form.style.display === "none" || form.style.display === "") {
-                form.style.display = "block"; // Show the form
-            } else {
-                form.style.display = "none"; // Hide the form
-            }
-        }
-
-        function fetchRecords() {
-            // Simulate fetching records and display them (you'll replace this with an actual fetch)
-            const recordsDisplay = document.getElementById('recordsDisplay');
-            recordsDisplay.innerHTML = "<p>Blood Donation Record 1</p><p>Blood Donation Record 2</p>";
-        }
-    </script>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+        {% for message in messages %}
+          <li>{{ message }}</li>
+        {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
 </body>
 </html>
